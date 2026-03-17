@@ -3,7 +3,7 @@ from typing import List
 def search(nums: List[int], target: int) -> int:
     left=0
     right=len(nums)-1
-    while True:
+    while right>=left:
         mid=(left+right)//2
         if nums[mid]>target:
             right=mid-1
@@ -11,8 +11,7 @@ def search(nums: List[int], target: int) -> int:
             left=mid+1
         else:
             return mid
-        if right<left:
-            return -1
+    return -1
 
 
 
