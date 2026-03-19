@@ -1,16 +1,16 @@
 import pytest
-from answer_704 import search
-@pytest.mark.parametrize('a,b,expected',[
-                         ([0,1,2,3,4],0,0),
-                         ([1,2,3,4,5],5,4),
-                         ([1,2,3,4],3,2),
-                         ([1,2,3,4],2,1),
-                         ([1,2,3,4],20,-1),
+from answer_27 import removeElement
+@pytest.mark.parametrize('nums,val,new_nums,lenght',[
+    ([1,1,1,1,1,11,1,1,1,1,11,1,1,1,11,1,2,1],1,[11,11,11,2],4),
+    ([1,2,3,3,4,5,6],3,[1,2,4,5,6],5)
 ])
 
-def test_search(a,b,expected):
-    assert search(a,b)==expected
-
+def test_removeElement(nums,val,new_nums,lenght):
+    assert removeElement(nums,val)==lenght
+    nums.sort
+    new_nums.sort
+    for i in range (len(nums)):
+        assert nums[i]==new_nums[i]
 
 if __name__ == '__main__':
     pass
