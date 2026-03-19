@@ -1,16 +1,20 @@
 from typing import List
-def removeElement( nums: List[int], val: int) -> int:
-    if nums==[]:
-        return 0
-    i=0
-    j=len(nums)-1
-    while i!=j:
-        if nums[i]==val:
-            nums[i],nums[j]=nums[j],nums[i]
-            j-=1
+def removeElement(nums, val):
+    left = 0
+    right = len(nums) - 1
+
+    while left <= right:
+        if nums[left] == val:
+            # 如果左边是我们要删的，就把最右边的元素挪过来顶包
+            nums[left] = nums[right]
+            # 右边那个位置已经处理过了（挪走了），所以右边界向内缩
+            right -= 1
         else:
-            i+=1
-    return i+1 if nums[i]!=val else i
+            # 如果左边是正常的，就放心跳过，看下一个
+            left += 1
+
+    return left
+
 def main():
     return 0
     
