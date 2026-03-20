@@ -1,35 +1,20 @@
 from typing import List
-def minSubArrayLen( target: int, nums: List[int]) -> int:
-    #-------------判定能否完成任务-----------
-    judge=[x for x in nums if x>0]
-    total=sum(judge)
-    if total< target:
-        return 0
-    #----------初始化,并获取基础和与结果------------
-    my_sum=0
-    flag=True
-    tail=0
-    while my_sum<target:
-        if tail==len(nums) and my_sum<target:
-            break
-        my_sum+=nums[tail]
-        tail+=1
-    res=length=tail
-    #-------------循环比较-----------------------
-    for i in range(1,len(nums)):
-        my_sum-=nums[i-1]
-        length-=1
-        while my_sum<target:
-            if tail==len(nums) and my_sum<target:
-                flag=False
-                break
-            my_sum+=nums[tail]
-            tail+=1
-            length+=1
-            flag=True
-        if flag:
-            res=min(res,length)
-    return max(res,1)
+def minSubArrayLen(target: int, nums: List[int]) -> int:
+    res = float('inf')
+    my_sum = 0
+    slow = 0  # 对应你的 i
+
+    # 标准做法：让右边界 fast (对应你的 tail) 跑在前面
+    for fast in range(len(nums)):
+        my_sum += nums[fast] # 1. 右边先进一个数
+
+        # 2. 只要够了，就一直缩左边 (对应你那个 while 的反向逻辑)
+        while my_sum >= target:
+            res = min(res, fast - slow + 1) # 记录当前长度
+            my_sum -= nums[slow]           # 踢掉左边的数
+            slow += 1                      # 左边界右移
+
+    return res if res != float('inf') else 0
 
 
 def main():
