@@ -9,21 +9,11 @@ def minSubArrayLen( target: int, nums: List[int]) -> int:
     my_sum=0
     flag=True
     tail=0
-    for i in range(len(nums)):
-        while my_sum<target:
-            if tail==len(nums) and my_sum<target:
-                nums.pop(0)
-                tail=0
-                my_sum=0
-                flag=False
-                break
-            else:
-                flag=True
-            my_sum+=nums[tail]
-            tail+=1
-
-        if flag:
+    while my_sum<target:
+        if tail==len(nums) and my_sum<target:
             break
+        my_sum+=nums[tail]
+        tail+=1
     res=length=tail
     #-------------循环比较-----------------------
     for i in range(1,len(nums)):
