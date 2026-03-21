@@ -10,13 +10,12 @@ def solve():
     #---------获取行列和数组--------------------
     rows=[0]*row
     columns=[0]*column
+    # 这样只扫一遍矩阵，速度能快一倍
     for m in range(row):
         for n in range(column):
-            rows[m]+=int(data[2+m*column+n])
-
-    for n in range(column):
-        for m in range(row):
-            columns[n]+=int(data[2+n+m*column])
+            val = int(data[2 + m * column + n])
+            rows[m] += val
+            columns[n] += val
     #----------获取行列前缀和数组-----------------
     def nums_sum(nums):
         for i in range(1,len(nums)):
