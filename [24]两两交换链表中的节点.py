@@ -13,15 +13,11 @@ def swap(past):
 
 
 def swapPairs(head: Optional[ListNode]) -> Optional[ListNode]:
-    if not head:
-        return head
     dummy=ListNode(next=head)
     tmp=dummy
-    while tmp.next.next:
+    while tmp.next and tmp.next.next:
         swap(tmp)
         tmp=tmp.next.next
-        if not tmp.next:
-            break
     return dummy.next
 
 def main():
