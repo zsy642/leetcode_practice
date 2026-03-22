@@ -44,5 +44,14 @@
 #         self.next = next
 class Solution:
     def removeElements(self, head: Optional[ListNode], val: int) -> Optional[ListNode]:
+        virus=ListNode(10086)
+        virus.next=head
+        tmp=virus
+        while tmp.next:
+            if tmp.next.val==val:
+                tmp.next=tmp.next.next
+            else:
+                tmp=tmp.next
+        return virus.next
         
 # leetcode submit region end(Prohibit modification and deletion)

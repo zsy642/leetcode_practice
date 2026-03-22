@@ -8,19 +8,15 @@ class ListNode:
         return str(self.val)
 
 def removeElements(head: Optional[ListNode], val: int) -> Optional[ListNode]:
-    while True:
-        if not head:
-            return None
-        if head.val!=val:
-            break
-        head=head.next
-    tmp=head
+    virus=ListNode(10086)
+    virus.next=head
+    tmp=virus
     while tmp.next:
         if tmp.next.val==val:
             tmp.next=tmp.next.next
         else:
             tmp=tmp.next
-    return head
+    return virus.next
 
 
 
