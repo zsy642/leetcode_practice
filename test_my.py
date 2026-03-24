@@ -1,14 +1,17 @@
 import pytest
-from answer_59 import generateMatrix
-@pytest.mark.parametrize('n,expect',[
-    (1,[[1]]),
-    (2,[[1,2],[4,3]]),
-    (3,[[1,2,3],[8,9,4],[7,6,5]]),
-    (4,[[1,2,3,4],[12,13,14,5],[11,16,15,6],[10,9,8,7]]),
+from answer_19 import removeNthFromEnd
+import tool
+@pytest.mark.parametrize('listcode,n,expect',[
+    ([1,2,3,4,5],2,[1,2,3,5]),
+    ([1],1,[]),
+    ([1,2],1,[1]),
+    ([1,2,3],3,[2,3]),
 ])
 
-def test_generateMatrix(n,expect):
-    assert generateMatrix(n)==expect
+def test_removeNthFromEnd(listcode,n,expect):
+    n0=tool.list2listnode(listcode)
+    result=removeNthFromEnd(n0,n)
+    assert tool.listnode2list(result)==expect
 
 
 if __name__ == '__main__':
