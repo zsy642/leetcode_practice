@@ -1,17 +1,20 @@
 import pytest
-from answer_19 import removeNthFromEnd
+from answer_face_02_07 import getIntersectionNode
 import tool
-@pytest.mark.parametrize('listcode,n,expect',[
-    ([1,2,3,4,5],2,[1,2,3,5]),
-    ([1],1,[]),
-    ([1,2],1,[1]),
-    ([1,2,3],3,[2,3]),
+@pytest.mark.parametrize('listcode,listcode2,expect',[
+    ([4,1,8,4,5],[5,0,1,8,4,5],8),
+    ([0,9,1,2,4],[3,2,4],2),
+    ([2,6,4],[1,5],0),
 ])
 
-def test_removeNthFromEnd(listcode,n,expect):
+def test_getIntersectionNode(listcode,listcode2,expect):
     n0=tool.list2listnode(listcode)
-    result=removeNthFromEnd(n0,n)
-    assert tool.listnode2list(result)==expect
+    n1=tool.list2listnode(listcode2)
+    result=getIntersectionNode(n0,n1)
+    if not result:
+        assert result==expect
+    else:
+        assert result.val==expect
 
 
 if __name__ == '__main__':
