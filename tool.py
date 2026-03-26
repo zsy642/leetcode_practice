@@ -12,12 +12,18 @@ class ListNode:
         self.val = val
         self.next = next
 
-def list2listnode(nums):
+def list2listnode(nums,circle=0,type=0):
+    dummy=ListNode(next=nums[0])
     n0=ListNode(nums[0])
     one=n0
-    for i in range(1, len(nums)):
+    circleone=dummy
+    for i in range(0, len(nums)):
         one.next=ListNode(nums[i])
         one=one.next
+        if i== circle:
+            circleone=one
+    if type==1:
+        one.next=circleone
     return n0
 
 def listnode2list(head):
