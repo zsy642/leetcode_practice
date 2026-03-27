@@ -69,14 +69,15 @@ class ListNode:
 def detectCycle(head: Optional[ListNode]) -> Optional[ListNode]:
     dummy=ListNode(10086)
     dummy.next=head
-    work_staff=dummy
-    dic={}
-    while work_staff.next:
-        if work_staff.next in dic:
-            work_staff=work_staff.next
-            return work_staff
-        dic[work_staff.next]=2333
-        work_staff=work_staff.next
+    one=two=three=dummy
+    while two.next and two.next.next :
+        two=two.next.next
+        one=one.next
+        if one is two:
+            while three is not one:
+                three=three.next
+                one=one.next
+            return three
     return
         
 # leetcode submit region end(Prohibit modification and deletion)
