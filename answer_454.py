@@ -41,23 +41,19 @@
 #  
 # 
 #  Related Topics 数组 哈希表 👍 1167 👎 0
-def add_nums(nums1,nums2) -> List[int]:
-    book={}
-    for num in nums1:
-        for num2 in nums2:
-            result=num1+num2
-            if result in book:
-                book[result]+=1
-            else:
-                book[result]=1
-    return book
+class Solution(object):
+    def fourSumCount(self, nums1, nums2, nums3, nums4):
+        # 使用字典存储nums1和nums2中的元素及其和
+        hashmap = dict()
+        for n1 in nums1:
+            for n2 in nums2:
+                hashmap[n1+n2] = hashmap.get(n1+n2, 0) + 1
 
-
-def fourSumCount(nums1: List[int], nums2: List[int], nums3: List[int], nums4: List[int]) -> int:
-    big1=add_nums(nums1,nums2)
-    big2=add_nums(nums3,nums4)
-    res=0
-    for target in big1:
-        if -target in big2:
-            res+=(big1[target]*big2[-target])
-    return res
+        # 如果 -(n1+n2) 存在于nums3和nums4, 存入结果
+        count = 0
+        for n3 in nums3:
+            for n4 in nums4:
+                key = - n3 - n4
+                if key in hashmap:
+                    count += hashmap[key]
+        return count
