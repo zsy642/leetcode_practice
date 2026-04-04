@@ -1,16 +1,22 @@
 import pytest
-from answer_142 import detectCycle
+from answer_202 import isHappy
 import tool
-@pytest.mark.parametrize('listcode,copy,expect',[
-    ([3,2,0,-4],1,1),
+@pytest.mark.parametrize('num,expect',[
+    (0,0),
+    (1,1),
+    (2,0),
+    (100,1),
+    (19,1),
+    (13,1),
+    (44,1),
+    (81,0),
+    (7,1),
+    (8,0),
 ])
 
-def test_detectCycle(listcode,copy,expect):
-    n0=tool.list2listnode(listcode,copy,1)
-    result=detectCycle(n0)
-    assert result==expect
+def test_isHappy(num,expect):
+    res=isHappy(num)
+    assert res==expect
 
 
 
-if __name__ == '__main__':
-    pass
