@@ -38,16 +38,17 @@
 # 
 #  Related Topics 哈希表 字符串 计数 👍 1019 👎 0
 
-def canConstruct(ransomNote: str, magazine: str) -> bool:
-    if len(ransomNote)>len(magazine):
-        return False
-    tmp={}
-    for i in magazine:
-        tmp[i]=tmp.get(i,0)+1
-    for j in ransomNote:
-        if tmp.get(j,0)==0:
+class Solution:
+    def canConstruct(ransomNote: str, magazine: str) -> bool:
+        if len(ransomNote)>len(magazine):
             return False
-        else:
-            tmp[j]-=1
-    return True
+        tmp=[0]*26
+        for i in magazine:
+            tmp[ord(i)-ord('a')]+=1
+        for j in ransomNote:
+            if tmp[ord(j)-ord('a')]==0:
+                return False
+            else:
+                tmp[ord(j)-ord('a')]-=1
+        return True
 # leetcode submit region end(Prohibit modification and deletion)
