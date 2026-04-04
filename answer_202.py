@@ -50,13 +50,13 @@ def numtool(num):
 
 
 def isHappy( n: int) -> bool:
-    repeat=set()
+    fast=n
     while True:
-        if n==1:
-            return True
-        if n in repeat:
-            return False
-        else:
-            repeat.add(n)
+        fast=numtool(numtool(fast))
         n=numtool(n)
+        if fast==1:
+            return True
+        if n ==fast:
+            return False
+
 
