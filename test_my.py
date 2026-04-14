@@ -1,21 +1,18 @@
 import pytest
-from answer_202 import isHappy
+from answer_15 import threeSum
 import tool
-@pytest.mark.parametrize('num,expect',[
-    (0,0),
-    (1,1),
-    (2,0),
-    (100,1),
-    (19,1),
-    (13,1),
-    (44,1),
-    (81,0),
-    (7,1),
-    (8,0),
+@pytest.mark.parametrize('nums,expect',[
+    ([-1,0,1,2,-1,-4],[[-1,-1,2],[-1,0,1]]),
+    ([0,1,1],[]),
+    ([0,0,0],[[0,0,0]]),
+    ([-1,-1,2],[[-1,-1,2]]),
+    ([1,2,0,1,0,0,0,0],[[0,0,0]]),
+    ([-2,1,1],[[-2,1,1]]),
+    ([0,0,0,0],[[0,0,0]]),
 ])
 
-def test_isHappy(num,expect):
-    res=isHappy(num)
+def test_threeSum(nums,expect):
+    res=threeSum(nums)
     assert res==expect
 
 
