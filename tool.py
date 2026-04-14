@@ -1,3 +1,4 @@
+import re
 def tool(n):
     res=[]
     for i in range(1, n):
@@ -37,5 +38,26 @@ def test():
     for i in range(1, 1000):
         print(i**0.5)
 
+def testre(num,resnum):
+    with open(r'测试原始数据.txt','r',encoding='utf-8') as f:
+        text=f.read()
+        testtext=r'(	)+(测试用例:)?(.+)\n'*num
+        testrule=re.compile(testtext)
+        testtexts=testrule.findall(text)
+        print(testtexts)
+        restext=r'(期望结果:)(.+)'+r'((\n)(.+))+'*(resnum-1)
+        resrule=re.compile(restext)
+        restexts=resrule.search(text)
+        #print(restexts.group(2),restexts.group(5))
+        resnum=2
+        for i in testtexts:
+            tmpstr=f'{i[2]},'
+            for j in range (2,num+1):
+                tmpstr+=f'{i[3*j-1]},'
+            tmpstr+=f'{restexts.group(resnum)})'
+            resnum+=3
+            print("("+tmpstr+',')
+
 if __name__ == '__main__':
+    testre(2,6)
     pass
