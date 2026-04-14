@@ -55,23 +55,21 @@ class Solution:
         res = []
         b=0
         while b<=(len(nums)-1):
+            if nums[b] > 0:
+                break
             a=b+1
             c=len(nums)-1
             while a<c:
                 if nums[a]+nums[b]+nums[c]==0:
                     res.append([nums[a],nums[b],nums[c]])
-                    past=[nums[a],nums[b],nums[c]]
                     c-=1
                     while (c<(len(nums)-1)and c>=0) and nums[c+1]==nums[c]:
                         c-=1
                 elif nums[a]+nums[b]+nums[c]>0:
                     c-=1
-                    while (c<(len(nums)-1)and c>=0) and nums[c+1]==nums[c]:
-                        c-=1
+
                 else:
                     a+=1
-                    while (a<len(nums)) and nums[a-1]==nums[a]:
-                        a+=1
             b+=1
             while (b<len(nums)) and nums[b-1]==nums[b]:
                 b+=1
