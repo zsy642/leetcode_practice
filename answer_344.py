@@ -33,10 +33,16 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def reverseString(self, s: List[str]) -> None:
+        start=0
+        tail=len(s)-1
+        while start<tail:
+            tmp=s[tail]
+            s[tail]=s[start]
+            s[start]=tmp
+            start+=1
+            tail-=1
         """
         Do not return anything, modify s in-place instead.
         """
-        # 原地反转,无返回值
-        s.reverse()
         
 # leetcode submit region end(Prohibit modification and deletion)
