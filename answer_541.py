@@ -48,18 +48,8 @@ def reverseString(onestart,oneover, s) -> None:
 class Solution:
     def reverseStr(self, s: str, k: int) -> str:
         s=list(s)
-        one=-1
-        two=-1
-        while True:
-            for i in range(k):
-                one+=1
-                two+=2
-            if  two>(len(s)-1):
-                break
-            reverseString((one-k+1),one,s)
-            one=two
-        reverseString((one-k+1),min(one,len(s)-1),s)
+        for i in range(2*k-1,len(s)-1+2*k,2*k):
+            reverseString(i-2*k+1,min(i-k,len(s)-1),s)
         s="".join(s)
         return s
-
 # leetcode submit region end(Prohibit modification and deletion)
