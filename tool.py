@@ -71,7 +71,7 @@ def get_leetcode_data_gemini(file_path, num):
     # 1. 提取“测试用例”之后到“测试结果”之前的所有行
     case_section = re.search(r'测试用例:(.*?)测试结果:', content, re.S) #S是让.可以匹配\n
     # 2. 提取“测试结果”之后的所有行
-    res_section = re.search(r'测试结果:(.*)', content, re.S)
+    res_section = re.search(r'期望结果:(.*)', content, re.S)
 
     if not case_section or not res_section:
         print("错误：未找到指定的标签格式，请检查文档内容。")
@@ -98,5 +98,5 @@ def get_leetcode_data_gemini(file_path, num):
     return final_data
 
 if __name__ == '__main__':
-    get_leetcode_data_gemini(r'测试原始数据.txt',2)
+    get_leetcode_data_gemini(r'测试原始数据.txt',1)
     pass
