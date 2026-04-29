@@ -21,6 +21,5 @@ def strStr( haystack: str, needle: str) -> int:
             j+=1
             if j==len(needle):
                 return (i-len(needle)+1)
-
     return -1
 # letcode submit region end(Prohibit modification and deletion)
