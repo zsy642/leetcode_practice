@@ -24,3 +24,4 @@ hashmap.get(n1+n2, 0) + 1,可以实现字典key,返回0
     长度是len(nums),但是最后一个索引是len(nums)-1
     分清索引index和数组的内容和nums[index]
 只能写2*k不能写2k
+类里面的变量是self.x不是x
