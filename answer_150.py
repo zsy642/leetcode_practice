@@ -35,14 +35,28 @@
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
-def evalRPN(tokens) -> int:
-    map= {"+":"+","-":"-","*":"*","/":"//"}
-    stack=[]
-    for i in tokens:
-        if i in map:
-            tmp=stack.pop()
-            stack.append(str(eval(stack.pop()+map[i]+tmp)))
-        else:
-            stack.append(i)
-    return int(stack[-1])
+class Solution:
+    def evalRPN(self, tokens: List[str]) -> int:
+        # 定义操作符映射，逻辑更清晰
+        operators = {
+            '+': lambda a, b: a + b,
+            '-': lambda a, b: a - b,
+            '*': lambda a, b: a * b,
+            # 关键：使用 int(a / b) 实现向零截断
+            '/': lambda a, b: int(a / b)
+        }
+
+        stack = []
+        for token in tokens:
+            if token in operators:
+                # 注意：后弹出来的是左操作数
+                num2 = stack.pop()
+                num1 = stack.pop()
+                # 执行运算并把结果（int）直接压回栈
+                stack.append(operators[token](num1, num2))
+            else:
+                # 只有入栈时转换一次 int
+                stack.append(int(token))
+
+        return stack[0]
 # leetcode submit region end(Prohibit modification and deletion)
