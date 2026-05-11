@@ -53,10 +53,7 @@ class Solution:
             if not root:
                 return
             get_res(root.left)
-            if root:
-                res.append(root.val)
-            else :
-                return
+            res.append(root.val)
             get_res(root.right)
         get_res(root)
         return res

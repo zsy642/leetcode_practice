@@ -73,10 +73,8 @@ class Solution:
                 return
             get_res(root.left)
             get_res(root.right)
-            if root:
-                res.append(root.val)
-            else :
-                return
+            res.append(root.val)
+
         get_res(root)
         return res
         
