@@ -66,26 +66,45 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def preorderTraversal(self, root: Optional[TreeNode],option=1) -> List[int]:
-        stack = [(root,False)]
-        res=[]
+    def universalTraversal(root, order_type="in"):
+        if not root:
+            return []
+
+        res = []
+        # 栈中元素格式为: (node, visited)
+        # visited 为 False 表示第一次遇到，为 True 表示可以访问了
+        stack = [(root, False)]
+
         while stack:
-            node,flag=stack.pop()
+            node, visited = stack.pop()
+
             if not node:
                 continue
-            if flag:
+
+            # 情况一：如果该节点已经是第二次相遇，直接收集结果
+            if visited:
                 res.append(node.val)
+
+            # 情况二：第一次遇到该节点，将其和子节点按“逆序”压栈
             else:
-                if option==1:
-                    stack.append((node.right,False))
-                    stack.append((node.left, False))
-                    stack.append((node, True))
-                if option==2:
+                if order_type == "pre":
+                    # 前序期望输出：根 -> 左 -> 右
+                    # 栈是 LIFO，所以入栈逆序：右 -> 左 -> 根
                     stack.append((node.right, False))
-                    stack.append((node, True))
                     stack.append((node.left, False))
-                if option==3:
-                    stack.append((node, True))
+                    stack.append((node, True))  # 标记为 True，下次弹出直接打印
+
+                elif order_type == "in":
+                    # 中序期望输出：左 -> 根 -> 右
+                    # 栈是 LIFO，所以入栈逆序：右 -> 根 -> 左
+                    stack.append((node.right, False))
+                    stack.append((node, True))  # 标记为 True
+                    stack.append((node.left, False))
+
+                elif order_type == "post":
+                    # 后序期望输出：左 -> 右 -> 根
+                    # 栈是 LIFO，所以入栈逆序：根 -> 右 -> 左
+                    stack.append((node, True))  # 标记为 True
                     stack.append((node.right, False))
                     stack.append((node.left, False))
 
