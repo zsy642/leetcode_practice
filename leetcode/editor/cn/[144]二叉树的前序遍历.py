@@ -66,17 +66,29 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
-        stack = []
+    def preorderTraversal(self, root: Optional[TreeNode],option=1) -> List[int]:
+        stack = [(root,False)]
         res=[]
-        while root:
-            res.append(root.val)
-            stack.append(root)
-            root=root.left
-            while not root and stack:
-                root=stack[-1]
-                root=root.right
-                stack.pop()
+        while stack:
+            node,flag=stack.pop()
+            if not node:
+                continue
+            if flag:
+                res.append(node.val)
+            else:
+                if option==1:
+                    stack.append((node.right,False))
+                    stack.append((node.left, False))
+                    stack.append((node, True))
+                if option==2:
+                    stack.append((node.right, False))
+                    stack.append((node, True))
+                    stack.append((node.left, False))
+                if option==3:
+                    stack.append((node, True))
+                    stack.append((node.right, False))
+                    stack.append((node.left, False))
+
         return res
 
 # leetcode submit region end(Prohibit modification and deletion)
