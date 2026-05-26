@@ -67,15 +67,15 @@
 #         self.right = right
 class Solution:
     def postorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
-        res=[]
-        def get_res(root):
-            if not root:
-                return
-            get_res(root.left)
-            get_res(root.right)
+        stack = []
+        res = []
+        while root:
             res.append(root.val)
-
-        get_res(root)
-        return res
-        
+            stack.append(root)
+            root = root.right
+            while not root and stack:
+                root = stack[-1]
+                root = root.left
+                stack.pop()
+        return res[::-1]
 # leetcode submit region end(Prohibit modification and deletion)

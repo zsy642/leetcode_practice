@@ -48,13 +48,15 @@
 #         self.right = right
 class Solution:
     def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
-        res=[]
-        def get_res(root):
-            if not root:
-                return
-            get_res(root.left)
-            res.append(root.val)
-            get_res(root.right)
-        get_res(root)
+        stack = []
+        res = []
+        while root:
+            stack.append(root)
+            root = root.left
+            while not root and stack:
+                root = stack[-1]
+                res.append(root.val)
+                root = root.right
+                stack.pop()
         return res
 # leetcode submit region end(Prohibit modification and deletion)
