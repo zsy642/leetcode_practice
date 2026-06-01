@@ -42,25 +42,32 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+from collections import deque
+
+
 class Solution:
-    from collections import deque
     def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
         if not root:
             return []
-        q1=deque()
-        q2=deque()
-        res=[[]]
-        use_q = q1
-        store_q=q2
-        use_q.append(root)
-        while q1 or q2:
-            if not use_q:
-                res.append([])
-                use_q,store_q=store_q,use_q
-            tmp=use_q.popleft()
-            if tmp : res[-1].append(tmp.val)
-            if tmp.left: store_q.append(tmp.left)
-            if tmp.right: store_q.append(tmp.right)
+
+        queue = deque([root])  # 只需要一个队列
+        res = []
+
+        while queue:
+            level_size = len(queue)  # 关键：拍个快照，记录当前层有多少个节点
+            current_level = []
+
+            # 这个 for 循环雷打不动，只消费当前层的数量
+            for _ in range(level_size):
+                node = queue.popleft()
+                current_level.append(node.val)
+
+                # 悄悄把下一层的节点推进队列尾部，绝不影响本次循环
+                if node.left:  queue.append(node.left)
+                if node.right: queue.append(node.right)
+
+            res.append(current_level)
+
         return res
 
 
