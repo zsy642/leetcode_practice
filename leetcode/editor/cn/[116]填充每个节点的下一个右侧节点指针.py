@@ -74,24 +74,27 @@ class Solution:
     from collections import deque
 
     def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
-        if not root:
+        if not root or not root.left or not root.right:
             return root
+        root.left.next=root.right
+        upleft=root.left
+        tmp1=upleft
 
-        queue = deque([root])  # 只需要一个队列
+        while tmp1 and tmp1.right and tmp1.left:
+            tmp1.left.next = tmp1.right
+            tmp3=tmp1.right
+            if tmp1.next:
+                tmp1 = tmp1.next
+                if not tmp1 or not tmp1.left or not tmp1.right:
+                    break
+                tmp3.next = tmp1.left
+            else:
+                if not upleft.left:
+                    break
+                tmp1=upleft.left
+                upleft=tmp1
 
 
-        while queue:
-            level_size = len(queue)  # 关键：拍个快照，记录当前层有多少个节点
-
-            # 这个 for 循环雷打不动，只消费当前层的数量
-            for i in range(level_size):
-                node = queue.popleft()
-
-                # 悄悄把下一层的节点推进队列尾部，绝不影响本次循环
-                if node.left:  queue.append(node.left)
-                if node.right: queue.append(node.right)
-                if i <level_size-1:
-                    node.next=queue[0]
 
         return root
 # leetcode submit region end(Prohibit modification and deletion)
