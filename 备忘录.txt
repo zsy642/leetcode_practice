@@ -30,5 +30,8 @@ hashmap.get(n1+n2, 0) + 1,可以实现字典key,返回0
 math.floor()：向下取整（与 // 效果相同）。math.ceil()：向上取整（向正无穷方向）。
 sort是升序的1234,字典也可以排序和list(一般这俩默认是按key升序)
 remove删除的值,pop是索引
+三元表达式:真值表达式 if 条件 else 假值表达式
+deque初始化要么就deque(),要么就是可迭代对象比如deque([root])
 items() 是字典的方法，返回一个视图对象，包含所有键值对，用于遍历字典。相当于数组的enumerate
 heapq.heappush(pri_que,(freq,key))推入的是 (freq,key)元组:堆会优先按freq从小到大排序(因为它是第一个元素).freq 相同,则按key从小到大排序。
+只有完美二叉树才是给定一个序列的树是唯一的

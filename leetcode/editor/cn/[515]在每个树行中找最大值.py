@@ -1,26 +1,21 @@
-# 给你二叉树的根节点 root ，返回其节点值的 层序遍历 。 （即逐层地，从左到右访问所有节点）。 
+# 给定一棵二叉树的根节点 root ，请找出该二叉树中每一层的最大值。 
 # 
 #  
 # 
-#  示例 1： 
-#  
-#  
-# 输入：root = [3,9,20,null,null,15,7]
-# 输出：[[3],[9,20],[15,7]]
-#  
-# 
-#  示例 2： 
+#  示例1： 
 # 
 #  
-# 输入：root = [1]
-# 输出：[[1]]
-#  
-# 
-#  示例 3： 
 # 
 #  
-# 输入：root = []
-# 输出：[]
+# 输入: root = [1,3,2,5,3,null,9]
+# 输出: [1,3,9]
+#  
+# 
+#  示例2： 
+# 
+#  
+# 输入: root = [1,2,3]
+# 输出: [1,3]
 #  
 # 
 #  
@@ -28,11 +23,14 @@
 #  提示： 
 # 
 #  
-#  树中节点数目在范围 [0, 2000] 内 
-#  -1000 <= Node.val <= 1000 
+#  二叉树的节点个数的范围是 [0,10⁴] 
+#  
+#  -2³¹ <= Node.val <= 2³¹ - 1 
 #  
 # 
-#  Related Topics 树 广度优先搜索 二叉树 👍 2308 👎 0
+#  
+# 
+#  Related Topics 树 深度优先搜索 广度优先搜索 二叉树 👍 416 👎 0
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
@@ -42,12 +40,9 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
-from collections import deque
-
-
 class Solution:
-
-    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+    from collections import deque
+    def largestValues(self, root: Optional[TreeNode]) -> List[int]:
         if not root:
             return []
 
@@ -67,9 +62,7 @@ class Solution:
                 if node.left:  queue.append(node.left)
                 if node.right: queue.append(node.right)
 
-            res.append(current_level)
+            res.append(max(current_level))
 
         return res
-
-
 # leetcode submit region end(Prohibit modification and deletion)

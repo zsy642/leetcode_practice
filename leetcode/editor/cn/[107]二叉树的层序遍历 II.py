@@ -1,4 +1,4 @@
-# 给你二叉树的根节点 root ，返回其节点值的 层序遍历 。 （即逐层地，从左到右访问所有节点）。 
+# 给你二叉树的根节点 root ，返回其节点值 自底向上的层序遍历 。 （即按从叶子节点所在层到根节点所在的层，逐层从左向右遍历） 
 # 
 #  
 # 
@@ -6,7 +6,7 @@
 #  
 #  
 # 输入：root = [3,9,20,null,null,15,7]
-# 输出：[[3],[9,20],[15,7]]
+# 输出：[[15,7],[9,20],[3]]
 #  
 # 
 #  示例 2： 
@@ -32,7 +32,7 @@
 #  -1000 <= Node.val <= 1000 
 #  
 # 
-#  Related Topics 树 广度优先搜索 二叉树 👍 2308 👎 0
+#  Related Topics 树 广度优先搜索 二叉树 👍 864 👎 0
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
@@ -42,12 +42,9 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
-from collections import deque
-
-
 class Solution:
-
-    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+    from collections import deque
+    def levelOrderBottom(self, root: Optional[TreeNode]) -> List[List[int]]:
         if not root:
             return []
 
@@ -69,7 +66,5 @@ class Solution:
 
             res.append(current_level)
 
-        return res
-
-
+        return res[::-1]
 # leetcode submit region end(Prohibit modification and deletion)

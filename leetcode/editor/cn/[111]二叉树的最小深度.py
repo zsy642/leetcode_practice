@@ -1,4 +1,8 @@
-# 给你二叉树的根节点 root ，返回其节点值的 层序遍历 。 （即逐层地，从左到右访问所有节点）。 
+# 给定一个二叉树，找出其最小深度。 
+# 
+#  最小深度是从根节点到最近叶子节点的最短路径上的节点数量。 
+# 
+#  说明：叶子节点是指没有子节点的节点。 
 # 
 #  
 # 
@@ -6,21 +10,14 @@
 #  
 #  
 # 输入：root = [3,9,20,null,null,15,7]
-# 输出：[[3],[9,20],[15,7]]
+# 输出：2
 #  
 # 
 #  示例 2： 
 # 
 #  
-# 输入：root = [1]
-# 输出：[[1]]
-#  
-# 
-#  示例 3： 
-# 
-#  
-# 输入：root = []
-# 输出：[]
+# 输入：root = [2,null,3,null,4,null,5,null,6]
+# 输出：5
 #  
 # 
 #  
@@ -28,11 +25,11 @@
 #  提示： 
 # 
 #  
-#  树中节点数目在范围 [0, 2000] 内 
+#  树中节点数的范围在 [0, 10⁵] 内 
 #  -1000 <= Node.val <= 1000 
 #  
 # 
-#  Related Topics 树 广度优先搜索 二叉树 👍 2308 👎 0
+#  Related Topics 树 深度优先搜索 广度优先搜索 二叉树 👍 1343 👎 0
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
@@ -42,14 +39,11 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
-from collections import deque
-
-
 class Solution:
-
-    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+    from collections import deque
+    def minDepth(self, root: Optional[TreeNode]) -> int:
         if not root:
-            return []
+            return 0
 
         queue = deque([root])  # 只需要一个队列
         res = []
@@ -64,12 +58,14 @@ class Solution:
                 current_level.append(node.val)
 
                 # 悄悄把下一层的节点推进队列尾部，绝不影响本次循环
+                if not node.left and not node.right:
+                    break
                 if node.left:  queue.append(node.left)
                 if node.right: queue.append(node.right)
 
             res.append(current_level)
+            if not node.left and not node.right:
+                break
 
-        return res
-
-
+        return len(res)
 # leetcode submit region end(Prohibit modification and deletion)
