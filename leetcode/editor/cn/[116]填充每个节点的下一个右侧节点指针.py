@@ -71,30 +71,24 @@ class Node:
 
 
 class Solution:
-    from collections import deque
-
     def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
-        if not root or not root.left or not root.right:
+        if not root:
             return root
-        root.left.next=root.right
-        upleft=root.left
-        tmp1=upleft
-
-        while tmp1 and tmp1.right and tmp1.left:
-            tmp1.left.next = tmp1.right
-            tmp3=tmp1.right
-            if tmp1.next:
-                tmp1 = tmp1.next
-                if not tmp1 or not tmp1.left or not tmp1.right:
-                    break
-                tmp3.next = tmp1.left
-            else:
-                if not upleft.left:
-                    break
-                tmp1=upleft.left
-                upleft=tmp1
-
-
-
+        # leftmost 负责每一层的“大队头”（就是你代码里的 upleft）
+        leftmost = root
+        # 只要下一层还有孩子，我们就继续往下织网
+        while leftmost.left:
+            # curr 负责在当前层“水平横移”（就是你代码里的 tmp1）
+            curr = leftmost
+            while curr:
+                # 情况 1：同一个爸爸的两个孩子相连（2 -> 3）
+                curr.left.next = curr.right
+                # 情况 2：跨越爸爸的连接（5 -> 6）
+                if curr.next:
+                    curr.right.next = curr.next.left
+                # 顺着上一层织好的网，水平往右走
+                curr = curr.next
+            # 当前层扫描完毕，大队头切到下一层的最左端
+            leftmost = leftmost.left
         return root
 # leetcode submit region end(Prohibit modification and deletion)
