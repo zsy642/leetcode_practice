@@ -1,4 +1,6 @@
 import re
+
+'''不知道有什么用'''
 def tool(n):
     res=[]
     for i in range(1, n):
@@ -8,24 +10,50 @@ def tool(n):
             res.append(i)
     print("(",res,",",[566,567],'),')
 
+'''单向链表类定义'''
 class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
         self.next = next
 
-def list2listnode(nums,circle=0,type=0):
-    dummy=ListNode(next=nums[0])
-    n0=ListNode(nums[0])
-    one=n0
-    circleone=dummy
-    for i in range(0, len(nums)):
-        one.next=ListNode(nums[i])
-        one=one.next
-        if i== circle:
-            circleone=one
-    if type==1:
-        one.next=circleone
-    return n0
+'''二叉树类定义'''
+class BinaryTree:
+    def __init__(self,val=0,left=None,right=None):
+        self.val=val
+        self.left=left
+        self.right = right
+        self.next=None
+
+def list2listnode(nums, pos=-1, is_cycle=False):
+    """
+    更优雅的链表转换函数
+    :param nums: 数据列表
+    :param pos: 环接入的索引位置（-1表示无环）
+    :param is_cycle: 是否构造环
+    :return: 链表头节点
+    """
+    if not nums:
+        return None
+
+    # 1. 使用 dummy (哑) 节点是处理链表的标准套路
+    dummy = ListNode(0)
+    curr = dummy
+    cycle_node = None
+
+    # 2. 一次遍历搞定所有节点的创建和链接
+    for i, val in enumerate(nums):
+        curr.next = ListNode(val)
+        curr = curr.next
+
+        # 记录环的入口节点
+        if i == pos:
+            cycle_node = curr
+
+    # 3. 如果需要成环，且索引合法
+    if is_cycle and cycle_node:
+        curr.next = cycle_node
+
+    return dummy.next
 
 def listnode2list(head):
     res=[]
@@ -38,6 +66,7 @@ def test():
     for i in range(1, 1000):
         print(i**0.5)
 
+'''配合文件提取leetcode用例'''
 def testre(num,resnum):
     with open(r'测试原始数据.txt','r',encoding='utf-8') as f:
         text=f.read()
@@ -58,8 +87,28 @@ def testre(num,resnum):
             resnum+=3
             print("("+tmpstr+',')
 
+def list2binarytree(mylist):
+    dexlen=len(mylist)-1
+    res=[]
+    for i in range(len(mylist)):
+        if not mylist[i]:
+            tmp=None
+        else:
+            tmp=BinaryTree(mylist[i])
+        res.append(tmp)
+        if i==0:
+            root=tmp
+
+    for i in range(len(res)):
+        tmp=res[i]
+        if 2*i+1<=dexlen:
+            tmp.left=res[2*i+1]
+        if 2*i+2<=dexlen:
+            tmp.right = res[2 * i + 2]
+    return root
 
 
+'''配合文件提取leetcode用例'''
 def get_leetcode_data_gemini(file_path, num):
     """
     file_path: 文件路径
@@ -98,5 +147,6 @@ def get_leetcode_data_gemini(file_path, num):
     return final_data
 
 if __name__ == '__main__':
+
     get_leetcode_data_gemini(r'测试原始数据.txt',1)
     pass

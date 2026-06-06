@@ -62,27 +62,54 @@ class Node:
         self.next = next
 """
 
+
+'''
+大循环改成 而不是most.next
+进循环之前lastmost=写一左左存在否则右
+进循环之后
+先找lastmost，while lastmost，lastmost=写一左左存在否则右，然后current=lastmost
+换层小循环mostleft=None
+if current.next:current=current.next
+
+如果俩都存在右是lastcurr
+current.next=左
+current=左
+否则左左存在否则右
+进循环之后
+current.next=lastcurrent
+'''
+
+
 class Solution:
-    from collections import deque
     def connect(self, root: 'Node') -> 'Node':
         if not root:
             return root
+        currmost = root
+        lastmost = root.left or root.right
+        while currmost or lastmost:
+            while not lastmost and currmost:
+                lastmost = currmost.left or currmost.right
+                if not lastmost: currmost = currmost.next
 
-        queue = deque([root])  # 只需要一个队列
+            current = lastmost
+            lastcurr = None
+            while currmost:
+                if current and current.next:
+                    current = current.next
 
+                if currmost.left and currmost.right:
+                    lastcurr = currmost.right
+                    if current != currmost.left: current.next = currmost.left
+                    current = currmost.left
+                else:
+                    if current!=(currmost.left or currmost.right):lastcurr = currmost.left or currmost.right
 
-        while queue:
-            level_size = len(queue)  # 关键：拍个快照，记录当前层有多少个节点
+                current.next = lastcurr
+                currmost = currmost.next
 
-            # 这个 for 循环雷打不动，只消费当前层的数量
-            for i in range(level_size):
-                node = queue.popleft()
-
-                # 悄悄把下一层的节点推进队列尾部，绝不影响本次循环
-                if node.left:  queue.append(node.left)
-                if node.right: queue.append(node.right)
-                if i <level_size-1:
-                    node.next=queue[0]
+            currmost = lastmost
+            lastmost = None
 
         return root
+
 # leetcode submit region end(Prohibit modification and deletion)
