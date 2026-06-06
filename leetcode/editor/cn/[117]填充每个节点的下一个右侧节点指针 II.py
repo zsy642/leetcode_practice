@@ -84,31 +84,27 @@ class Solution:
     def connect(self, root: 'Node') -> 'Node':
         if not root:
             return root
-        currmost = root
-        lastmost = root.left or root.right
-        while currmost or lastmost:
-            while not lastmost and currmost:
-                lastmost = currmost.left or currmost.right
-                if not lastmost: currmost = currmost.next
 
-            current = lastmost
-            lastcurr = None
-            while currmost:
-                if current and current.next:
-                    current = current.next
+        curr = root  # 当前层的扫描指针
 
-                if currmost.left and currmost.right:
-                    lastcurr = currmost.right
-                    if current != currmost.left: current.next = currmost.left
-                    current = currmost.left
-                else:
-                    if current!=(currmost.left or currmost.right):lastcurr = currmost.left or currmost.right
+        while curr:
+            # 每一层开局，都新建一个虚拟头节点
+            dummy = Node(0)
+            tail = dummy  # tail 永远指向下一层当前已经织好网的最后一个节点
 
-                current.next = lastcurr
-                currmost = currmost.next
+            # 开始横向扫描当前层
+            while curr:
+                if curr.left:
+                    tail.next = curr.left
+                    tail = tail.next
+                if curr.right:
+                    tail.next = curr.right
+                    tail = tail.next
+                curr = curr.next  # 顺着上一层的 next 往右走
 
-            currmost = lastmost
-            lastmost = None
+            # 当前层走完了，下一层的网已经通过 dummy 织好了
+            # dummy.next 就是下一层真正的第一个节点
+            curr = dummy.next
 
         return root
 
