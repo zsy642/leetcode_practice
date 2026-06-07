@@ -40,39 +40,28 @@
 #         self.left = left
 #         self.right = right
 class Solution:
+
+
     def isSymmetric(self, root: Optional[TreeNode]) -> bool:
-        stack1=[root.left]
-        stack2=[root.right]
 
-        while stack1 and stack2:
-            tmp1=stack1[-1]
-            tmp2=stack2[-1]
-            if  not tmp1 and not tmp2:
-                pass
-            elif (not tmp1 and tmp2) or (not tmp2 and tmp1) or tmp1.val != tmp2.val:
+        def Symmetric(rootleft,rootright):
+            if not rootleft and not rootright:
+                return True
+            if not rootleft or not rootright:
                 return False
+            if rootleft.val!= rootright.val:
+                return False
+            if not Symmetric(rootleft.left,rootright.right):
+                return False
+            if not Symmetric(rootleft.right,rootright.left):
+                return False
+            return True
 
 
-            if tmp1 and (tmp1.left or tmp1.right):
-                stack1.append(tmp1.left)
-                stack2.append(tmp2.right)
-            else :
-                if not stack1 or not stack2:
-                    break
-                stack1.pop()
-                stack2.pop()
-                if not stack1 or not stack2:
-                    break
-                tmp1 = stack1.pop()
-                tmp2 = stack2.pop()
-                stack1.append(tmp1.right)
 
 
-                stack2.append(tmp2.left)
+        return Symmetric(root.left, root.right)
 
-        if stack1 or stack2:
-            return False
-        return True
 
 
 
