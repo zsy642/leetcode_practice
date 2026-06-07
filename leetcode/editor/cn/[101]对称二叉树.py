@@ -40,27 +40,13 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-
-
     def isSymmetric(self, root: Optional[TreeNode]) -> bool:
+        def check(left, right):
+            if not left and not right: return True
+            if not left or not right: return False
+            return (left.val == right.val) and check(left.left, right.right) and  check(left.right, right.left)
 
-        def Symmetric(rootleft,rootright):
-            if not rootleft and not rootright:
-                return True
-            if not rootleft or not rootright:
-                return False
-            if rootleft.val!= rootright.val:
-                return False
-            if not Symmetric(rootleft.left,rootright.right):
-                return False
-            if not Symmetric(rootleft.right,rootright.left):
-                return False
-            return True
-
-
-
-
-        return Symmetric(root.left, root.right)
+        return check(root.left, root.right)
 
 
 
