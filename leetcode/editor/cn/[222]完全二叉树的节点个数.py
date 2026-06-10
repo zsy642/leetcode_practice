@@ -54,32 +54,27 @@ class Solution:
     def countNodes(self, root: Optional[TreeNode]) -> int:
         if not root:
             return 0
-        # finddepth形参节点,返回值深度(算自己也算叶子)和底层叶子数
-        def finddepth(root):
-            #退出条件如果是叶子返回1,0,如果是一个叶子返回2,1
-            if not root.left and not root.right:
-                return 1,0
-            if not root.left or not root.right:
-                return 2,1
-            #每次先左调用一次,判断没有叶子再进行右边调用,否则直接返回高度和叶子数
-            deepl,numl=finddepth(root.left)
-            if not numl:
-                # 如果没有叶子记得调用右边,最后返回左边的深度和右边叶子树+左边的叶子,代入的时候不减一  ps:完美二叉树叶子节点数 n₀：刚好等于 \(2^{h-1}\)
-                deepr, numr = finddepth(root.right)
-                if deepr==deepl and not numr:
-                    return deepl + 1, 0
-                else:
-                    return deepl+1,2**(deepl-1)+numr
-            else:
-                return deepl+1,numl
 
-        #调用finddepth(root),最后得到结果计算,代入的时候深度要减一+叶子数或者不减一如果叶子是0的话   ps:完美二叉树总节点数 n 与高度 h 的关系：\(n = 2^h - 1\)
-        deep,num=finddepth(root)
-        #print(deep,num)
-        if not num:
-            return 2**deep-1
-        else:
-            return 2**(deep-1)-1+num
+        # 1. 顺着最左边探底，算左深度
+        left_depth = 0
+        left_node = root
+        while left_node:
+            left_depth += 1
+            left_node = left_node.left
+
+        # 2. 顺着最右边探底，算右深度
+        right_depth = 0
+        right_node = root
+        while right_node:
+            right_depth += 1
+            right_node = right_node.right
+
+        # 3. 奇迹时刻：如果左右深度一样，说明是满二叉树，直接公式秒杀
+        if left_depth == right_depth:
+            return (2 ** left_depth) - 1
+
+        # 4. 如果不一样，说明最底层没填满，老老实实：1个根节点 + 左子树节点数 + 右子树节点数
+        return 1 + self.countNodes(root.left) + self.countNodes(root.right)
 
         
 # leetcode submit region end(Prohibit modification and deletion)
