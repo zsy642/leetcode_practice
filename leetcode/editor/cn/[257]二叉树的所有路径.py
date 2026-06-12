@@ -37,23 +37,31 @@ import Optional
 #         self.left = left
 #         self.right = right
 class Solution:
-
     def binaryTreePaths(self, root: Optional[TreeNode]) -> List[str]:
         res = []
-        mylist=[]
-        def where_is_path(root,mylist):
-            if not root:
-                return
-            mylist.append(str(root.val))
-            if not root.left and not root.right:
-                res.append('->'.join(mylist))
-                mylist.pop()
+        path = []  # 改个更有业务含义的名字
+
+        def dfs(node):
+            if not node:
                 return
 
-            where_is_path(root.left,mylist)
-            where_is_path(root.right,mylist)
-            mylist.pop()
-        where_is_path(root,mylist)
+            # 1. 做出选择：把当前节点加入路径
+            path.append(str(node.val))
+
+            # 2. 触发条件：如果是叶子节点，记录一条完整路径
+            if not node.left and not node.right:
+                res.append('->'.join(path))
+                # 注意：这里不需要单独 pop 和 return 了，让它自然往下走
+            else:
+                # 3. 递归：继续向下探索
+                dfs(node.left)
+                dfs(node.right)
+
+            # 4. 撤销选择：离开当前节点前，把脚印擦掉
+            # 无论是叶子节点还是中间节点，都统一在这里收尾，绝对对称！
+            path.pop()
+
+        dfs(root)
         return res
         
 # leetcode submit region end(Prohibit modification and deletion)
