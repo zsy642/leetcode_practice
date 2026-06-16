@@ -42,23 +42,15 @@
 #         self.right = right
 class Solution:
     def sumOfLeftLeaves(self, root: Optional[TreeNode]) -> int:
-        if not root.left and not root.right:
+        if not root:
             return 0
-        res=0
-        def LeftLeaves(root):
-            nonlocal res
-            if not root :
-                return 0
-            left=LeftLeaves(root.left)
-            if left:
-                res+=left
-            if not root.left and not root.right:
-                return root.val
-            LeftLeaves(root.right)
 
+        mid_val = 0
+        # 前序位置：在父节点处，直接检查左孩子是不是叶子
+        if root.left and not root.left.left and not root.left.right:
+            mid_val = root.left.val  # 抓到了！
 
-        LeftLeaves(root)
-        return res
-
+        # 顺理成章：我抓到的 + 左边漏网的 + 右边藏着的
+        return mid_val + self.sumOfLeftLeaves(root.left) + self.sumOfLeftLeaves(root.right)
 
 # leetcode submit region end(Prohibit modification and deletion)
