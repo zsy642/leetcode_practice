@@ -46,22 +46,11 @@ class Solution:
     def findBottomLeftValue(self, root: Optional[TreeNode]) -> int:
         # res 存 (节点值, 最大深度)
         # 初始深度给 1，因为 root 必然存在（题目给出了不为空的限制）
-        res = (root.val, 1)
-
-        def dfs(node, depth):
-            nonlocal res
-            if not node:
-                return
-
-            # 中：如果是叶子节点，且破了深度纪录，直接占坑
-            if not node.left and not node.right:
-                if depth > res[1]:
-                    res = (node.val, depth)
-
-            # 左、右：下钻时直接把 depth + 1 传下去，不改变当前层的 depth
-            dfs(node.left, depth + 1)
-            dfs(node.right, depth + 1)
-
-        dfs(root, 1)
-        return res[0]
+        from collections import deque
+        queue=deque([root])
+        while queue:
+            a=queue.popleft()
+            if a.right: queue.append(a.right)
+            if a.left: queue.append(a.left)
+        return a.val
 # leetcode submit region end(Prohibit modification and deletion)
