@@ -38,6 +38,7 @@ import Optional
 #         self.right = right
 class Solution:
     def binaryTreePaths(self, root: Optional[TreeNode]) -> List[str]:
+
         res = []
         path = []  # 改个更有业务含义的名字
 
