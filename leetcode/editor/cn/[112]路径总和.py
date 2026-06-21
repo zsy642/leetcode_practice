@@ -53,23 +53,14 @@
 #         self.right = right
 class Solution:
     def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
-        path = []  # 改个更有业务含义的名字
-        def dfs(node):
-            if not node:
-                return False
-            # 1. 做出选择：把当前节点加入路径
-            path.append(node.val)
-            # 2. 触发条件：如果是叶子节点，记录一条完整路径
-            if not node.left and not node.right and sum(path)==targetSum:
-                return True
-                # 注意：这里不需要单独 pop 和 return 了，让它自然往下走
-            else:
-                # 3. 递归：继续向下探索
-                if dfs(node.left):return True
-                if dfs(node.right):return True
-            # 4. 撤销选择：离开当前节点前，把脚印擦掉
-            # 无论是叶子节点还是中间节点，都统一在这里收尾，绝对对称！
-            path.pop()
-        res = dfs(root)
-        return bool(res)
+        if not root:
+            return False
+
+        # 如果是叶子节点，看手里的指标是不是刚好被扣得只剩自己了
+        if not root.left and not root.right:
+            return root.val == targetSum
+
+        # 抛下包袱，轻装上阵。函数传参自带“回溯”效果，出了这层自动恢复原样
+        return self.hasPathSum(root.left, targetSum - root.val) or \
+            self.hasPathSum(root.right, targetSum - root.val)
 # leetcode submit region end(Prohibit modification and deletion)
