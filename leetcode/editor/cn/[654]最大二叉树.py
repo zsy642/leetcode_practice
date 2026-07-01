@@ -55,18 +55,24 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    from itertools import islice
     def constructMaximumBinaryTree(self, nums: List[int]) -> Optional[TreeNode]:
-        bigdic={val:i for i,val in enumerate(nums)}
-        def CMBT(left,right):
-            if right<=left:
-                return
-            root_val=max(islice(nums,left,right))
-            myindex=bigdic[root_val]
-            root = TreeNode(root_val)
-            root.left=CMBT(left,myindex)
-            root.right=CMBT(myindex+1,right)
+        def build(left, right):
+            # 边界：区间为空
+            if left >= right:
+                return None
+
+            # 奇迹时刻：直接在 [left, right) 的下标范围里找“让 nums[i] 最大”的那个 i
+            # 纯指针扫描，零内存拷贝，一步到位拿到最大值的下标
+            best_idx = max(range(left, right), key=lambda i: nums[i])
+
+            # 建根节点
+            root = TreeNode(nums[best_idx])
+
+            # 左右分治
+            root.left = build(left, best_idx)
+            root.right = build(best_idx + 1, right)
+
             return root
 
-        return CMBT(0, len(nums))
+        return build(0, len(nums))
 # leetcode submit region end(Prohibit modification and deletion)
