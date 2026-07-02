@@ -47,12 +47,14 @@
 #         self.right = right
 class Solution:
     def searchBST(self, root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
-        def bst(root,val):
-            if not root:
-                return
-            if root.val==val:
-                return root
-            return bst(root.left,val) if root.val>val else bst(root.right,val)
+        curr = root
 
-        return bst(root,val)
+        # 只要没踩空，就顺着单向轨迹一路滑下去
+        while curr:
+            if curr.val == val:
+                return curr
+            # 利用你的短路逻辑：大了往左，小了往右
+            curr = curr.left if curr.val > val else curr.right
+
+        return None
 # leetcode submit region end(Prohibit modification and deletion)
