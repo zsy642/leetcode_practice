@@ -46,20 +46,19 @@
 #         self.right = right
 class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
-        magic=float('inf')
-        res = float('-inf')
-        def dfs(root):
-            nonlocal res
-            if not root:
-                return
-            if dfs(root.left)==magic:
-                return magic
-            if res == magic:
-                return magic
-            res=root.val if root.val>res else magic
-            if dfs(root.right)==magic:
-                return magic
 
-        dfs(root)
-        return False if res == magic else True
+        def validate(node, low, high):
+            if not node:
+                return True
+
+            # 前序位置：每个节点刚进场，就要接受严格的区间安检
+            if not (low < node.val < high):
+                return False
+
+            # 完美的双轨分工，同时更新下一代的安检标准
+            # 左孩子的上限是当前节点值；右孩子的下限是当前节点值
+            return validate(node.left, low, node.val) and \
+                validate(node.right, node.val, high)
+
+        return validate(root, float('-inf'), float('inf'))
 # leetcode submit region end(Prohibit modification and deletion)
