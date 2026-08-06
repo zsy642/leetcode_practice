@@ -44,17 +44,25 @@
 #         self.right = right
 class Solution:
     def getMinimumDifference(self, root: Optional[TreeNode]) -> int:
-        self.lastnum=float('-inf')
-        result=float('inf')
-        def MinimumDifference(root):
-            if root== None:
+        prev = float('-inf')
+        result = float('inf')
+
+        def inorder(node):
+            nonlocal prev, result
+            if not node:
                 return
-            MinimumDifference(root.left)
-            nonlocal result
-            result=min(result,root.val-self.lastnum)
-            self.lastnum=root.val
-            MinimumDifference(root.right)
-        MinimumDifference(root)
+
+            # 1. 左
+            inorder(node.left)
+
+            # 2. 中：比较相邻两数的差值，并把 prev 推进到当前节点
+            result = min(result, node.val - prev)
+            prev = node.val
+
+            # 3. 右
+            inorder(node.right)
+
+        inorder(root)
         return result
         
 # leetcode submit region end(Prohibit modification and deletion)
