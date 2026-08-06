@@ -28,7 +28,6 @@ hashmap.get(n1+n2, 0) + 1,可以实现字典key,返回0
 6//5=1,6/5=1.2
 // (地板除)：向下取整（Floor）。int()：向 0 取整（截断小数位，不论正负）。
 math.floor()：向下取整（与 // 效果相同）。math.ceil()：向上取整（向正无穷方向）。
-sort是升序的1234,字典也可以排序和list(一般这俩默认是按key升序)
 remove删除的值,pop是索引
 三元表达式:真值表达式 if 条件 else 假值表达式,例如lastmost = root.left if root.left else root.right
 二叉树里大多数人这么写lastmost = root.left or root.right,or的规则不同于c,如果前真返回前否则返回后
@@ -41,3 +40,9 @@ heapq.heappush(pri_que,(freq,key))推入的是 (freq,key)元组:堆会优先按f
 解决递归的初始化问题:
     1.递归内写nonlocal res,然后外部写res=0
     2.尾递归,直接在返回值那里递归
+sort是升序的1234,字典也可以排序和list(一般这俩默认是按key升序)
+字典是没有 .sort() 方法的（因为 .sort() 是列表特有的类方法）,sort是原地的,sorted是非原地,且返回一个纯 Key 的列表，而不是一个排序后的字典。
+    字典排序正确办法是sorted_by_key = dict(sorted(my_dict.items(), key=lambda x: x[0]))
+类变量是在类里面的全局变量，默认在类里面全局可读，可修改。(也就是self.后面的变量)
+    不建议把函数内部的临时递归状态挂到 self上。如果这个Solution实例在多线程环境下被复用,或者连续调用两次getMinimumDifference
+    self.lastnum可能会留有上一次调用的残留数据，从而引发隐藏的 Bug。可以统一使用 nonlocal，让函数内部的状态保持绝对的独立与封装
