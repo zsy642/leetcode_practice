@@ -51,36 +51,33 @@
 #         self.right = right
 class Solution:
     def findMode(self, root: Optional[TreeNode]) -> List[int]:
-        prev = root.val
-        g_num=0
-        num=0
+        prev = None
+        count = 0
+        max_count = 0
         result = []
 
         def inorder(node):
-            nonlocal prev, result , g_num, num
+            nonlocal prev, count, max_count, result
             if not node:
                 return
 
             # 1. 左
             inorder(node.left)
 
-
-            # 2. 中
-            if node.val==prev:
-
-                num+=1
+            # 2. 中：实时维护 count 并实时结算
+            if prev is not None and node.val == prev:
+                count += 1
             else:
+                count = 1
                 prev = node.val
-                num=1
-            if g_num == num:
-                result.append(prev)
-            elif g_num < num:
 
-                result = [prev]
+            # 只要发现新的更高频元素，立马刷新 result
+            if count == max_count:
+                result.append(node.val)
+            elif count > max_count:
+                max_count = count
+                result = [node.val]  # 直接覆写，清空以前的低频元素
 
-                g_num = num
-            else:
-                pass
             # 3. 右
             inorder(node.right)
 
