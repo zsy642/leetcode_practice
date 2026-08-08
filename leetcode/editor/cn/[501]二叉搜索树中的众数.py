@@ -63,36 +63,27 @@ class Solution:
 
             # 1. 左
             inorder(node.left)
-          #  print('a')
+
 
             # 2. 中
             if node.val==prev:
-               # print('a')
+
                 num+=1
             else:
-                if g_num==num:
-                    result.append(prev)
-                elif g_num<num:
-                   # print('ab')
-                    result = [prev]
-                 #   print(result)
-                    g_num=num
-                else:
-                    pass
                 prev = node.val
                 num=1
+            if g_num == num:
+                result.append(prev)
+            elif g_num < num:
 
+                result = [prev]
+
+                g_num = num
+            else:
+                pass
             # 3. 右
             inorder(node.right)
 
         inorder(root)
-        if g_num == num:
-            result.append(prev)
-        elif g_num < num:
-
-            result = [prev]
-
-        else:;
-            pass
         return result
 # leetcode submit region end(Prohibit modification and deletion)
