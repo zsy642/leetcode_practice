@@ -53,21 +53,19 @@
 
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        result=None
+        # 1. 终止条件：踩空了，或者当前节点直接就是 p 或 q
+        if not root or root == p or root == q:
+            return root
 
-        def CommonAncestor(root):
+        # 2. 后序遍历：去左右子树里招募 p 和 q
+        left = self.lowestCommonAncestor(root.left, p, q)
+        right = self.lowestCommonAncestor(root.right, p, q)
 
-            nonlocal result
-            if  not root or result:
-                return
-            l=CommonAncestor(root.left)
-            r=CommonAncestor(root.right)
-            if  (l and r) or ((l or r) and (root==p or root==q)):
-                result=root
+        # 3. 逻辑合并：
+        # 如果左右两边都有收获，说明当前节点就是那个最近公共祖先！
+        if left and right:
+            return root
 
-            if root==p or root==q or r or l:
-                return True
-
-        CommonAncestor(root)
-        return result
+        # 如果只有一边有收获（或者都没收获），把找到的节点往上传递
+        return left or right
 # leetcode submit region end(Prohibit modification and deletion)
