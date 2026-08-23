@@ -44,17 +44,17 @@
 
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        p,q=p.val,q.val
-        if p > q:
-            p, q = q, p
-        def CommonAncestor(root):
-            if not root:
-                return
-            if p<=root.val and root.val<=q:
-                return root
-            elif p<root.val:
-                return CommonAncestor(root.left)
-            else:
-                return CommonAncestor(root.right)
-        return CommonAncestor(root)
+        if not root:
+            return None
+
+        # 1. 都在左边：一起往左拐
+        if root.val > p.val and root.val > q.val:
+            return self.lowestCommonAncestor(root.left, p, q)
+
+        # 2. 都在右边：一起往右拐
+        if root.val < p.val and root.val < q.val:
+            return self.lowestCommonAncestor(root.right, p, q)
+
+        # 3. 产生分叉（一个在左一个在右，或者其中一个等于 root）：当前节点就是 LCA！
+        return root
 # leetcode submit region end(Prohibit modification and deletion)
