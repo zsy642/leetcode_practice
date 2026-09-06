@@ -58,17 +58,19 @@ class Solution:
     def insertIntoBST(self, root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
         if not root:
             return TreeNode(val)
-        def dfs(root):
-            if val>root.val:
-                if root.right :
-                    dfs(root.right)
-                else :
-                    root.right=TreeNode(val)
+
+        curr = root
+        while curr:
+            if val < curr.val:
+                if not curr.left:
+                    curr.left = TreeNode(val)
+                    break
+                curr = curr.left
             else:
-                if root.left:
-                    dfs(root.left)
-                else:
-                    root.left=TreeNode(val)
-        dfs(root)
+                if not curr.right:
+                    curr.right = TreeNode(val)
+                    break
+                curr = curr.right
+
         return root
 # leetcode submit region end(Prohibit modification and deletion)
